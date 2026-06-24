@@ -1,0 +1,53 @@
+﻿.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(17, 17, 17, 0.35);
+  z-index: 50;
+}
+
+.modal {
+  width: min(420px, 100%);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+p {
+  color: #555555;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.btn-secondary,
+.btn-danger {
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btn-secondary {
+  border: 1px solid #e0e0e0;
+  color: #333333;
+  background: #ffffff;
+}
+
+.btn-danger {
+  color: #ffffff;
+  background: #cc2200;
+}

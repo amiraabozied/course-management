@@ -1,0 +1,23 @@
+[1m[33mComponent HMR has been enabled, see https://angular.dev/hmr for more info.[39m[22m
+[31m×[39m Building... [31m[FAILED: spawn EPERM][39m
+C:\Users\aaboz\OneDrive\Desktop\course-management\node_modules\@angular-devkit\architect\node_modules\rxjs\dist\cjs\internal\util\reportUnhandledError.js:13
+            throw err;
+            ^
+
+Error: spawn EPERM
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at Object.spawn (node:child_process:796:9)
+    at ensureServiceIsRunning (C:\Users\aaboz\OneDrive\Desktop\course-management\node_modules\esbuild\lib\main.js:2268:29)
+    at context (C:\Users\aaboz\OneDrive\Desktop\course-management\node_modules\esbuild\lib\main.js:2167:33)
+    at #performBundle (C:\Users\aaboz\OneDrive\Desktop\course-management\node_modules\@angular\build\src\tools\esbuild\bundler-context.js:165:68)
+    at BundlerContext.bundle (C:\Users\aaboz\OneDrive\Desktop\course-management\node_modules\@angular\build\src\tools\esbuild\bundler-context.js:138:49)
+    at C:\Users\aaboz\OneDrive\Desktop\course-management\node_modules\@angular\build\src\tools\esbuild\bundler-context.js:67:28
+    at Array.map (<anonymous>)
+    at BundlerContext.bundleAll (C:\Users\aaboz\OneDrive\Desktop\course-management\node_modules\@angular\build\src\tools\esbuild\bundler-context.js:63:67)
+    at executeBuild (C:\Users\aaboz\OneDrive\Desktop\course-management\node_modules\@angular\build\src\builders\application\execute-build.js:110:65) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'spawn'
+}
+
+Node.js v24.11.1

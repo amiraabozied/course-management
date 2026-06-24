@@ -1,0 +1,101 @@
+﻿<div class="details-shell" *ngIf="course as c">
+  <header class="details-hero">
+    <a routerLink="/courses" class="back-link" aria-label="Back to courses">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5" />
+        <path d="m12 19-7-7 7-7" />
+      </svg>
+      <span>Back to courses</span>
+    </a>
+
+    <div class="hero-card">
+      <div class="course-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-meta">
+          <span class="eyebrow">Course #{{ c.id }}</span>
+          <span [class]="'status-badge status-' + c.status.toLowerCase()">{{ c.status }}</span>
+        </div>
+        <h1>{{ c.courseName }}</h1>
+        <p>{{ c.description || 'Course record overview and management details.' }}</p>
+      </div>
+
+      <a [routerLink]="['/courses', c.id, 'edit']" class="btn-primary">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+        </svg>
+        <span>Edit Course</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="summary-grid" aria-label="Course summary">
+    <article class="summary-card">
+      <span class="summary-label">Instructor</span>
+      <strong>{{ c.instructorName }}</strong>
+    </article>
+    <article class="summary-card">
+      <span class="summary-label">Category</span>
+      <strong>{{ c.category }}</strong>
+    </article>
+    <article class="summary-card">
+      <span class="summary-label">Duration</span>
+      <strong>{{ c.duration }} hrs</strong>
+    </article>
+    <article class="summary-card">
+      <span class="summary-label">Price</span>
+      <strong>{{ c.price | number:'1.0-0' }} EGP</strong>
+    </article>
+  </section>
+
+  <section class="details-panel">
+    <div class="panel-header">
+      <div>
+        <p class="eyebrow">Record details</p>
+        <h2>Course information</h2>
+      </div>
+      <span class="created-pill">Created {{ c.createdDate | date:'MMM d, y' }}</span>
+    </div>
+
+    <dl class="details-list">
+      <div>
+        <dt>ID</dt>
+        <dd>#{{ c.id }}</dd>
+      </div>
+      <div>
+        <dt>Course Name</dt>
+        <dd>{{ c.courseName }}</dd>
+      </div>
+      <div>
+        <dt>Instructor Name</dt>
+        <dd>{{ c.instructorName }}</dd>
+      </div>
+      <div>
+        <dt>Category</dt>
+        <dd>{{ c.category }}</dd>
+      </div>
+      <div>
+        <dt>Duration</dt>
+        <dd>{{ c.duration }} hours</dd>
+      </div>
+      <div>
+        <dt>Price</dt>
+        <dd>{{ c.price | number:'1.0-0' }} EGP</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd><span [class]="'status-badge status-' + c.status.toLowerCase()">{{ c.status }}</span></dd>
+      </div>
+      <div>
+        <dt>Created Date</dt>
+        <dd>{{ c.createdDate }}</dd>
+      </div>
+    </dl>
+  </section>
+</div>

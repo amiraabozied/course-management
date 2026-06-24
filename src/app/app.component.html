@@ -1,0 +1,20 @@
+﻿<nav class="topbar">
+  <div class="topbar-inner">
+    <a routerLink="/courses" class="topbar-brand" aria-label="Go to courses home">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+      </div>
+      <span class="brand-name">EduTrack</span>
+    </a>
+    <span class="topbar-tag">Course Management</span>
+  </div>
+</nav>
+
+<div class="app-body">
+  <router-outlet />
+</div>
+
+<app-toast-container />

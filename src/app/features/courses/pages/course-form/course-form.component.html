@@ -1,0 +1,173 @@
+﻿<div class="form-shell">
+  <header class="form-hero">
+    <a routerLink="/courses" class="back-link" aria-label="Back to courses">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5" />
+        <path d="m12 19-7-7 7-7" />
+      </svg>
+      <span>Back to courses</span>
+    </a>
+
+    <div class="hero-main">
+      <div>
+        <p class="eyebrow">Course setup</p>
+        <h1>{{ isEditMode ? 'Edit Course' : 'Add Course' }}</h1>
+      </div>
+      <span class="status-chip">{{ form.status }}</span>
+    </div>
+  </header>
+
+  <form class="course-form" #courseForm="ngForm" novalidate (ngSubmit)="save(courseForm)">
+    <section class="form-section">
+      <div class="section-heading">
+        <span class="section-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+        </span>
+        <div>
+          <h2>Course info</h2>
+        </div>
+      </div>
+
+      <div class="field-stack">
+        <label class="field field-wide">
+          <span>Course Name</span>
+          <input
+            name="courseName"
+            required
+            minlength="3"
+            placeholder="Angular Fundamentals"
+            [(ngModel)]="form.courseName"
+            #courseName="ngModel"
+            [class.input-invalid]="courseName.invalid && (courseName.touched || submitted)"
+          />
+          <small class="error-message" *ngIf="courseName.errors?.['required'] && (courseName.touched || submitted)">Course name is required.</small>
+          <small class="error-message" *ngIf="courseName.errors?.['minlength'] && (courseName.touched || submitted)">Course name must be at least 3 characters.</small>
+        </label>
+
+        <label class="field">
+          <span>Instructor Name</span>
+          <input
+            name="instructorName"
+            required
+            minlength="3"
+            placeholder="Ahmed Ali"
+            [(ngModel)]="form.instructorName"
+            #instructorName="ngModel"
+            [class.input-invalid]="instructorName.invalid && (instructorName.touched || submitted)"
+          />
+          <small class="error-message" *ngIf="instructorName.errors?.['required'] && (instructorName.touched || submitted)">Instructor name is required.</small>
+          <small class="error-message" *ngIf="instructorName.errors?.['minlength'] && (instructorName.touched || submitted)">Instructor name must be at least 3 characters.</small>
+        </label>
+
+        <label class="field">
+          <span>Category</span>
+          <input
+            name="category"
+            required
+            placeholder="Frontend"
+            [(ngModel)]="form.category"
+            #category="ngModel"
+            [class.input-invalid]="category.invalid && (category.touched || submitted)"
+          />
+          <small class="error-message" *ngIf="category.invalid && (category.touched || submitted)">Category is required.</small>
+        </label>
+      </div>
+    </section>
+
+    <section class="form-section form-section-muted">
+      <div class="section-heading compact">
+        <span class="section-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 6v6l4 2" />
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+        </span>
+        <h2>Details</h2>
+      </div>
+
+      <div class="metrics-grid">
+        <label class="field">
+          <span>Duration</span>
+          <div class="input-suffix" [class.group-invalid]="duration.invalid && (duration.touched || submitted)">
+            <input name="duration" required type="number" min="1" [(ngModel)]="form.duration" #duration="ngModel" />
+            <b>hrs</b>
+          </div>
+          <small class="error-message" *ngIf="duration.errors?.['required'] && (duration.touched || submitted)">Duration is required.</small>
+          <small class="error-message" *ngIf="duration.errors?.['min'] && (duration.touched || submitted)">Duration must be at least 1 hour.</small>
+        </label>
+
+        <label class="field">
+          <span>Price</span>
+          <div class="input-prefix" [class.group-invalid]="price.invalid && (price.touched || submitted)">
+            <b>EGP</b>
+            <input name="price" required type="number" min="0" [(ngModel)]="form.price" #price="ngModel" />
+          </div>
+          <small class="error-message" *ngIf="price.errors?.['required'] && (price.touched || submitted)">Price is required.</small>
+          <small class="error-message" *ngIf="price.errors?.['min'] && (price.touched || submitted)">Price cannot be negative.</small>
+        </label>
+
+        <label class="field">
+          <span>Status</span>
+          <input type="hidden" name="status" required [(ngModel)]="form.status" #status="ngModel" />
+          <div class="status-dropdown" [class.status-dropdown-open]="statusDropdownOpen">
+            <button
+              type="button"
+              class="status-trigger"
+              [attr.aria-expanded]="statusDropdownOpen"
+              aria-haspopup="listbox"
+              (click)="statusDropdownOpen = !statusDropdownOpen"
+            >
+              <span class="status-option-dot" [class.dot-active]="form.status === 'Active'" [class.dot-draft]="form.status === 'Draft'" [class.dot-archived]="form.status === 'Archived'"></span>
+              <span>{{ form.status }}</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+
+            <div class="status-menu" role="listbox" *ngIf="statusDropdownOpen">
+              <button
+                *ngFor="let status of statuses"
+                type="button"
+                class="status-option"
+                [class.status-option-selected]="form.status === status"
+                role="option"
+                [attr.aria-selected]="form.status === status"
+                (click)="selectStatus(status)"
+              >
+                <span class="status-option-dot" [class.dot-active]="status === 'Active'" [class.dot-draft]="status === 'Draft'" [class.dot-archived]="status === 'Archived'"></span>
+                <span>{{ status }}</span>
+                <svg *ngIf="form.status === status" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m20 6-11 11-5-5" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <small class="error-message" *ngIf="status.invalid && (status.touched || submitted)">Status is required.</small>
+        </label>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <label class="field">
+        <span>Description</span>
+        <textarea name="description" rows="5" maxlength="250" placeholder="Short course notes" [(ngModel)]="form.description" #description="ngModel"></textarea>
+        <small class="hint">Optional, max 250 characters.</small>
+      </label>
+    </section>
+
+    <div class="form-actions">
+      <a routerLink="/courses" class="btn-secondary">Cancel</a>
+      <button type="submit" class="btn-primary" [disabled]="courseForm.invalid && submitted">
+        <span>{{ isEditMode ? 'Update Course' : 'Save Course' }}</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>
+

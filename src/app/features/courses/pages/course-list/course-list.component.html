@@ -1,0 +1,214 @@
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1 class="page-title">Courses</h1>
+      <span class="page-count">{{ filteredCourses.length }} of {{ courses.length }} courses</span>
+    </div>
+    <a routerLink="/courses/add" class="btn-primary">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Add Course
+    </a>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search by course name..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+      />
+      <button type="button" class="clear-btn" *ngIf="searchTerm" (click)="searchTerm = ''; onSearchChange()" title="Clear">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="filter-group">
+      <button
+        type="button"
+        *ngFor="let s of statusFilters"
+        class="filter-btn"
+        [class.filter-btn--active]="selectedStatus === s"
+        (click)="setFilter(s)"
+      >{{ s }}</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+
+    <!-- ── Skeleton ────────────────────────────────── -->
+    <ng-container *ngIf="isLoading">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Instructor</th>
+            <th>Category</th>
+            <th>Duration</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th aria-label="Actions"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let _ of skeletonRows">
+            <td><span class="sk sk--xs"></span></td>
+            <td><span class="sk sk--lg"></span></td>
+            <td><span class="sk sk--md"></span></td>
+            <td><span class="sk sk--sm"></span></td>
+            <td><span class="sk sk--xs"></span></td>
+            <td><span class="sk sk--xs"></span></td>
+            <td><span class="sk sk--sm"></span></td>
+            <td><span class="sk sk--sm"></span></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <!-- ── Loaded ──────────────────────────────────── -->
+    <ng-container *ngIf="!isLoading">
+      <table class="data-table" *ngIf="filteredCourses.length > 0; else emptyState">
+        <thead>
+          <tr>
+            <th class="th-sortable" (click)="sortBy('id')">
+              ID
+              <svg class="sort-icon sort-icon--{{ sortIcon('id') }}" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </th>
+            <th class="th-sortable" (click)="sortBy('courseName')">
+              Course Name
+              <svg class="sort-icon sort-icon--{{ sortIcon('courseName') }}" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </th>
+            <th class="th-sortable" (click)="sortBy('instructorName')">
+              Instructor
+              <svg class="sort-icon sort-icon--{{ sortIcon('instructorName') }}" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </th>
+            <th class="th-sortable" (click)="sortBy('category')">
+              Category
+              <svg class="sort-icon sort-icon--{{ sortIcon('category') }}" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </th>
+            <th class="th-sortable" (click)="sortBy('duration')">
+              Duration
+              <svg class="sort-icon sort-icon--{{ sortIcon('duration') }}" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </th>
+            <th class="th-sortable" (click)="sortBy('price')">
+              Price
+              <svg class="sort-icon sort-icon--{{ sortIcon('price') }}" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </th>
+            <th class="th-sortable" (click)="sortBy('status')">
+              Status
+              <svg class="sort-icon sort-icon--{{ sortIcon('status') }}" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </th>
+            <th class="th-sortable" (click)="sortBy('createdDate')">
+              Created
+              <svg class="sort-icon sort-icon--{{ sortIcon('createdDate') }}" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </th>
+            <th aria-label="Actions"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of visibleCourses">
+            <td class="col-id">#{{ course.id }}</td>
+            <td class="col-name">{{ course.courseName }}</td>
+            <td class="col-instructor">{{ course.instructorName }}</td>
+            <td class="col-category">
+              <span class="category-tag">{{ course.category }}</span>
+            </td>
+            <td class="col-duration">{{ course.duration }}h</td>
+            <td class="col-price">${{ course.price | number:'1.0-0' }}</td>
+            <td class="col-status">
+              <span [class]="'status-badge status-' + course.status.toLowerCase()">{{ course.status }}</span>
+            </td>
+            <td class="col-date">{{ course.createdDate | date:'MMM d, y' }}</td>
+            <td class="col-actions">
+              <div class="action-group">
+                <button type="button" class="icon-btn" title="View details" (click)="viewCourse(course.id)">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+                <button type="button" class="icon-btn" title="Edit course" (click)="editCourse(course.id)">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                </button>
+                <button type="button" class="icon-btn icon-btn--danger" title="Delete course" (click)="confirmDelete(course)">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                    <path d="M10 11v6M14 11v6"/>
+                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </div>
+          <p class="empty-title">No courses found</p>
+          <p class="empty-sub" *ngIf="searchTerm || selectedStatus !== 'All'">
+            Try adjusting your search or filter
+          </p>
+          <a *ngIf="!searchTerm && selectedStatus === 'All'" routerLink="/courses/add" class="btn-primary btn-primary--mt">
+            Add your first course
+          </a>
+        </div>
+      </ng-template>
+
+      <app-pagination
+        *ngIf="filteredCourses.length > 0"
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        [totalItems]="filteredCourses.length"
+        [pageSize]="pageSize"
+        (pageChange)="goToPage($event)"
+      />
+    </ng-container>
+
+  </div>
+
+</div>
+
+<app-delete-confirm-modal
+  *ngIf="courseToDelete"
+  [courseName]="courseToDelete.courseName"
+  (confirmed)="onDeleteConfirmed()"
+  (cancelled)="onDeleteCancelled()"
+/>

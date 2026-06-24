@@ -1,0 +1,14 @@
+﻿<div class="toast-stack" aria-live="polite" aria-atomic="true">
+  <button
+    *ngFor="let message of messages$ | async"
+    type="button"
+    class="toast"
+    [class.toast-success]="message.type === 'success'"
+    [class.toast-error]="message.type === 'error'"
+    [class.toast-info]="message.type === 'info'"
+    (click)="toastService.dismiss(message.id)"
+  >
+    <span class="toast-dot"></span>
+    <span>{{ message.text }}</span>
+  </button>
+</div>

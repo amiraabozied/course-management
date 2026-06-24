@@ -1,0 +1,44 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "courseName": "Angular Fundamentals",
+      "instructorName": "Ahmed Ali",
+      "category": "Frontend",
+      "duration": 20,
+      "price": 1500,
+      "status": "Active",
+      "createdDate": "2026-06-01"
+    },
+    {
+      "id": 2,
+      "courseName": "React Essentials",
+      "instructorName": "Mona Hassan",
+      "category": "Frontend",
+      "duration": 18,
+      "price": 1400,
+      "status": "Active",
+      "createdDate": "2026-06-03"
+    },
+    {
+      "id": 3,
+      "courseName": "Node.js Basics",
+      "instructorName": "Sara Mohamed",
+      "category": "Backend",
+      "duration": 15,
+      "price": 1200,
+      "status": "Draft",
+      "createdDate": "2026-06-05"
+    },
+    {
+      "id": 4,
+      "courseName": "UI/UX Design Basics",
+      "instructorName": "Omar Hassan",
+      "category": "Design",
+      "duration": 10,
+      "price": 900,
+      "status": "Archived",
+      "createdDate": "2026-06-10"
+    }
+  ]
+}
