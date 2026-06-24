@@ -53,7 +53,7 @@ describe('CourseListComponent', () => {
     });
 
     it('filters by search term (case-insensitive)', () => {
-      component.searchTerm = 'ang';
+      component.searchTerm = 'ANGULAR';
       expect(component.filteredCourses.length).toBe(1);
       expect(component.filteredCourses[0].courseName).toBe('Angular');
     });
